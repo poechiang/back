@@ -1,0 +1,77 @@
+@charset "utf-8";
+.quill-editor{
+	.ql-toolbar.ql-snow{ 
+		.ql-formats{
+		    margin-right: .15rem;
+		    border-right: .01rem solid #eee;
+		    padding-right: .15rem;
+		}
+	}
+	.ql-container.ql-snow .ql-editor {
+
+	    font-size:.16rem;
+		h1,
+		h2,
+		h3,
+		h4,
+		h5,
+		h6 {
+			position:relative;
+			margin: .3rem 0 .1rem;
+			padding-left: .2rem;
+			font-weight:400;
+		    &:before{
+				content: '';
+				background-color: #f66;
+				position: absolute;
+				width: .05rem;
+				left: 0;
+				height: 80%;
+				top: 10%;
+		    }
+		}
+		ul,dl,ol{
+			line-height:2;
+		}
+		&:not(.ql-blank) p{
+			line-height: 1.8em;
+		}
+
+		a {
+			text-decoration:none;
+			color: #f66;
+			border-bottom: 2px solid transparent;
+			&:hover {
+				color: #f33;
+				border-bottom-color: #f33;
+			}
+		}
+		blockquote {
+			border-left: .04rem solid #ccc;
+			margin-bottom: .05rem;
+			margin-top: 5px;
+			padding-left: 16px;
+			background-color: #EEEEEE;
+			font-size: .83em;
+			color: #888;
+			padding: .1rem;
+			border-radius: 0 .1rem .1rem 0;
+			line-height:2;
+		}
+
+		pre{
+			font-family: "Roboto Mono", "Menlo", "Consolas", monospace;
+			padding:.2rem .15rem;
+			font-size:16px;
+		}
+		img {
+			max-width: 100%;
+		}
+
+
+
+		&.ql-viewer{
+			padding:0;
+		}
+	}
+}

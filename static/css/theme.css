@@ -1,0 +1,10 @@
+@charset 'utf-8';
+
+.price{
+	color:#FF7347;
+}
+
+.price:before{
+	content:'￥';
+	font-size: .83em;
+}
