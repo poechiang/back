@@ -2,10 +2,10 @@
 	<div id="header">
 		<div class="poeui-frame flex-row flex-line-center">
 			<a class="gohome mr-20" :href="info.url||'javascript:;'" style="width:2rem;" v-if="info">
-				<img :src="info.logo||'https://res.shibu365.com/i/2019-04-22/123311377ff24b6895265686e9ba209c.jpg'" height="45"  > {{info.title||'拾补数据'}}
+				<img :src="info.logo||'https://res.shibu365.com/i/2019-04-22/123311377ff24b6895265686e9ba209c.jpg'" height="45"  > {{info.label||'拾补数据'}}
 			</a>
 			<template v-if="apps"  v-for="(app,key) in apps">
-				<a :href="app.path" class="dp-block app" :title="app.title" :target="app.blank?'_blank':'_self'"  v-if="$store.state.app!=key">
+				<a :href="app.url" class="dp-block app" :title="app.title" :target="app.target||key"  v-if="$store.state.app!=key">
 					<icon :face="app.icon"></icon> {{app.label}}
 				</a>
 			</template>
@@ -45,38 +45,34 @@
 		props:['view'],
 		data() {
 
-			var info = $$.catch.local('app_info')||null
-
-			if (info) {
-				info = info[this.$store.state.app]||null
-			}
-
 			return {
-				info: info,
 				apps: $$.catch.local('app_list')||null,
-				//keys:this.$store.state.search.keys,
 				old:this.$store.state.search.keys,
 				currPage:this.$route.path
 			}
 		},
-		watch:{
-			info:{
-				handler(v){
-					document.title =v.title||'拾补数据'
-					var link = document.querySelector("link[rel*='icon']") || document.createElement('link')
-				    link.type = 'image/x-icon'
-				    link.rel = 'shortcut icon'
-
-				    link.href = '/static/images/'+(v.icon?v.icon:'favicon')+'.ico'
-				    document.getElementsByTagName('head')[0].appendChild(link)
-				},
-				deep:true
-			}
-		},
 		mounted(){
 			this.loadData()
+
+			document.title =this.info.label+'::'+this.info.title
+			var link = document.querySelector("link[rel*='icon']") || document.createElement('link')
+		    link.type = 'image/x-icon'
+		    link.rel = 'shortcut icon'
+
+		    link.href = '/static/images/'+(this.info.favicon||'favicon')+'.ico'
+		    document.getElementsByTagName('head')[0].appendChild(link)
 		},
 		computed:{
+			info(){
+
+				if (this.apps) {
+					return this.apps[(this.$store.state.app||'home')]||null
+				}
+				else{
+					return null
+				}
+
+			},
 			isDirty:function(){
 				return this.$store.state.search.keys.length>0
 			},
@@ -86,15 +82,7 @@
 		},
 		methods:{
 			loadData(){
-				http.request('back/index/app_info',{app:this.$store.state.app},rlt=>{
-
-					this.info = rlt.data
-
-
-					var info = $$.catch.local('app_info')||{}
-					info[this.$store.state.app] = rlt.data
-					$$.catch.local('app_info',info)
-				})
+				
 
 				http.request('back/index/app_list',rlt=>{
 

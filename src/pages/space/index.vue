@@ -80,7 +80,8 @@
 		route:{
 			path:['/space','/space/index'],
 			meta:{
-				menu:'space',
+				menu:'old',
+				app:'space',
 			},
 			
 		},
@@ -139,6 +140,7 @@
 			}
 		},
 		mounted(){
+
 			this.loadData()
 			var cb = new ClipBoard('.file-copy', {								    
 			    text: (target)=> {
@@ -191,6 +193,12 @@
 					this.cmItems[7].visiabled = false
 				}
 			}
+		},
+
+		beforeRouteUpdate(to, from, next) {
+			var t = to.query.t||'old'
+			to.meta.menu = t
+			next()
 		},
 		methods:{
 			loadData(){

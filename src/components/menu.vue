@@ -34,6 +34,11 @@
 
 			return { list: menu }
 		},
+		// watch:{
+		// 	'$store.state.menu':(v)=>{
+
+		// 	}
+		// },
 		mounted(){
 			this.loadData()
 		},
